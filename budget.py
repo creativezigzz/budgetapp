@@ -26,11 +26,15 @@ class Category(object):
         self.__ledger = newledg
 
     def deposit(self, amount, description=""):
-        """
+        """Method that accepts an amount and description and add it to the ledger
 
-        :param amount:
-        :param description:
-        :return:
+         PRE: amount must be filled, but the description is optional.
+         POST: create a new dictionary entry with the amount and description (if it's only
+         the amount then return a empty description) and add it to the ledger of the instance.
+
+        :param amount: Total of the price added
+        :param description: A little description of the product
+        :return: /
         """
         self.__ledger.append({"amount": amount, "description": description})
 
