@@ -11,16 +11,18 @@ class Category(object):
 
     def __str__(self):
         name = '{:*^30}'.format(self.__name)
-        totamount = 0
         totstr = ""
         for item in self.__ledger:
-            des = '{:23}'.format(item["description"])
+            des = '{:.23}'.format('{:23}'.format(item["description"]))
             amo = '{:>7}'.format(item["amount"])
-            totamount += item["amount"]
             totstr += f"{des}{amo}\n"
         return f"{name}\n" \
                f"{totstr}" \
-               f"Total: {totamount}"
+               f"Total: {'{:.7}'.format(self.total())}"
+
+    @property
+    def name(self):
+        return self.__name
 
     @property
     def ledger(self):
@@ -65,18 +67,49 @@ class Category(object):
         """
         if amount <= 0:
             raise CategoryException("The amount cannot be negative or equal to zéro")
-        if self.total() < amount:
+        if not self.check_funds(amount):
             return False
         else:
             self.__ledger.append({"amount": -amount, "description": description})
             return True
 
-    def getbalance(self):
+    def get_balance(self):
         """Method to print the total amount
 
         :return: /
         """
-        print(f"You got {self.total()}€ on your budget category")
+        print(f"You got {'{:.7}'.format(self.total())}€ on your budget category")
+
+    def transfer(self, amount, other):
+        """Method to transfer a mount from a category to another category
+        PRE: Amount must be positive, and other is an existing category
+        POST: If there is enough funds in the self.ledger then add a new withdraw with
+        a description "Transfer to [other] Budget Categroy" and add a new deposit on other.ledger
+        with the same amount and a description : Transfer from [Source Budget Category]".
+        If there are not enough funds, nothing should be added to either ledgers.
+        RAISE: If amount is negative or equal to zero, then raise an exception.
+        :param amount: The amount to transfer
+        :param other: The other categroy budget you want to deposit
+        :return: True if the operation went well or False if not
+        """
+        if amount <= 0:
+            raise CategoryException("The amount cannot be negative or equal to zéro")
+        if not self.check_funds(amount):
+            return False
+        else:
+            self.withdraw(amount, f"Transfer to {other.__name} Budget Category")
+            other.deposit(amount, f"Transfer from {self.__name} Budget Category")
+            return True
+
+    def check_funds(self, amount):
+        """Method that check and compare the amount on the current balance and the other amount
+
+        :param amount: The amount that we will compare with the actual funds
+        :return: True if amount is lower than the actual balance of the category and returns False otherwise.
+        """
+        if amount > self.total():
+            return False
+        return True
 
 
 def create_spend_chart(categories):
