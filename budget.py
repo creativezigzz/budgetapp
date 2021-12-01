@@ -1,3 +1,8 @@
+class CategoryException(Exception):
+    def __init__(self, message):
+        Exception.__init__(self, message)
+
+
 class Category(object):
     def __init__(self, name="Empty"):
         self.__name = name
@@ -24,6 +29,17 @@ class Category(object):
     @ledger.setter
     def ledger(self, newledg):
         self.__ledger = newledg
+
+    def total(self):
+        """A method to return the total amount present in the ledger
+        PRE:/
+        POST:/
+        :return: total mount in the ledger
+        """
+        total = 0
+        for item in self.__ledger:
+            total += item["amount"]
+        return total
 
     def deposit(self, amount, description=""):
         """Method that accepts an amount and description and add it to the ledger
