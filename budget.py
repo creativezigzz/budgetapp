@@ -54,6 +54,23 @@ class Category(object):
         """
         self.__ledger.append({"amount": amount, "description": description})
 
+    def withdraw(self, amount, description=""):
+        """ Method similar to deposit but it store an negative amount
+        PRE: amount is positive. If there are not enough funds, nothing should be added to the ledger.
+        POST: This method should return True if the withdrawal took place, and False otherwise.
+        RAISE: If amount is negative or equal to zero, then raise an exception.
+        :param amount: Total of the priced that will be withdraw from the ledger
+        :param description: A little description of the product
+        :return: True if the withdrawal took place, False otherwise
+        """
+        if amount <= 0:
+            raise CategoryException("The amount cannot be negative or equal to zéro")
+        if self.total() < amount:
+            return False
+        else:
+            self.__ledger.append({"amount": -amount, "description": description})
+            return True
+
 
 def create_spend_chart(categories):
     pass
