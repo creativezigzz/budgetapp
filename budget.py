@@ -71,6 +71,13 @@ class Category(object):
             self.__ledger.append({"amount": -amount, "description": description})
             return True
 
+    def getbalance(self):
+        """Method to print the total amount
+
+        :return: /
+        """
+        print(f"You got {self.total()}€ on your budget category")
+
 
 def create_spend_chart(categories):
     pass
