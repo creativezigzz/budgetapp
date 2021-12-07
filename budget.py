@@ -1,3 +1,12 @@
+from operator import itemgetter
+from itertools import zip_longest
+import math
+
+
+def roundup(x):
+    return int(math.ceil(x / 10.0)) * 10
+
+
 class CategoryException(Exception):
     def __init__(self, message):
         Exception.__init__(self, message)
@@ -18,7 +27,8 @@ class Category(object):
             totstr += f"{des}{amo}\n"
         return f"{name}\n" \
                f"{totstr}" \
-               f"Total: {'{:.7}'.format(self.total())}"
+               f"Total: {'{:.7}'.format(self.total())}" \
+               f"\n \n"
 
     @property
     def name(self):
@@ -27,10 +37,6 @@ class Category(object):
     @property
     def ledger(self):
         return self.__ledger
-
-    @ledger.setter
-    def ledger(self, newledg):
-        self.__ledger = newledg
 
     def total(self):
         """A method to return the total amount present in the ledger
@@ -78,7 +84,8 @@ class Category(object):
 
         :return: /
         """
-        print(f"You got {'{:.7}'.format(self.total())}€ on your budget category")
+
+        return f"You got {'{:.7}'.format(self.total())}€ on your budget category \n \n"
 
     def transfer(self, amount, other):
         """Method to transfer a mount from a category to another category
@@ -111,6 +118,54 @@ class Category(object):
             return False
         return True
 
+    def total_withdraw(self):
+        total_withdraw = 0
+        for item in self.__ledger:
+            if item["amount"] < 0:
+                total_withdraw += -(item["amount"])
+        return total_withdraw
 
-def create_spend_chart(categories):
-    pass
+
+def create_spend_chart(categories: list = Category):
+    """Show the pourcentages spent in each category passed in to the function.
+    PRE: The percentage spent should be calculated only with withdrawals and not with deposits.µ
+    They can be up to four category.
+    POST : Each percentage of category should be rounded down to the nearest 10.
+    :param categories: a list of all the Category object that want to be compare
+    :return: a string that is the chart.
+    """
+    finalstring = f"{'{:-^20}'.format('')} \n" \
+                  "Percentage spent by category \n" \
+                  f"{'{:-^20}'.format('')} \n"
+    totalwithdraw = 0
+    allcat = []
+    for cat in categories:  # counting of each categories
+        totalwithdraw += cat.total_withdraw()
+    # Creating a new list of dictionary to sort
+    for cat in categories:
+        percentage = roundup(cat.total_withdraw() / totalwithdraw * 100)
+        allcat.append({"categories": cat.name, "percentage_withdrawals": percentage})
+    newallcat = sorted(allcat, key=itemgetter('percentage_withdrawals'),
+                       reverse=True)  # ou aussi mais moins propre key=lambda k: k['percentage_withdrawals']
+    for x in range(100, -10, -10):
+        finalstring += f"{'{:3}'.format(x)}|"
+        for cat in newallcat:
+            if cat["percentage_withdrawals"] > x:
+                finalstring += " o"
+            else:
+                finalstring += "  "
+        finalstring += "\n"
+    listname = []  # Liste qui contient les différents noms des catégories
+    finalstring += f"{'{:-^20}'.format('')} \n"
+    for cat in categories:
+        listname.append(cat.name)
+    # Remplir la liste pour qu'elle contienne 4 éléments
+    while (len(listname) < 4):
+        listname.append("")
+    for item1, item2, item3, item4 in zip_longest(listname[0], listname[1], listname[2], listname[3], fillvalue=" "):
+        finalstring += f"{'{:>6}'.format(item1)} {item2} {item3} {item4} \n"
+        # for x in newallcat:
+        #
+        #     finalstring += f"{x['categories'][y]}"
+        # finalstring += "\n"
+    return finalstring
