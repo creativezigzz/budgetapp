@@ -11,6 +11,7 @@ def strip_white_space(str):
     """
     return str.replace(" ", "").replace("\t", "").replace("\n", "")
 
+
 class UnitTests(unittest.TestCase):
     def setUp(self):
         self.food = budget.Category("Food")
@@ -105,8 +106,8 @@ class UnitTests(unittest.TestCase):
         expected = f"*************Food*************\ndeposit                 900\n" \
                    f"milk, cereal, eggs, bac -45.67\nTransfer to Entertainme -20\nTotal: 834.33\n\n"
 
-
-        self.assertEqual(strip_white_space(actual), strip_white_space(expected), 'Expected different string representation of object.')
+        self.assertEqual(strip_white_space(actual), strip_white_space(expected),
+                         'Expected different string representation of object.')
 
     def test_create_spend_chart(self):
         self.food.deposit(900, "deposit")
@@ -123,7 +124,8 @@ class UnitTests(unittest.TestCase):
                    "     B  F  E  \n     u  o  n  \n     s  o  t  \n     i  d  e  \n     n     r  \n" \
                    "     e     t  \n     s     a  \n     s     i  \n           n  \n           m  \n" \
                    "           e  \n           n  \n           t  "
-        self.assertEqual(strip_white_space(actual), strip_white_space(expected), 'Expected different chart representation. Check that all spacing is exact.')
+        self.assertEqual(strip_white_space(actual), strip_white_space(expected),
+                         'Expected different chart representation. Check that all spacing is exact.')
 
 
 if __name__ == "__main__":
