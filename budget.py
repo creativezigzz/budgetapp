@@ -82,10 +82,10 @@ class Category(object):
     def get_balance(self):
         """Method to print the total amount
 
-        :return: /
+        :return: un string
         """
 
-        return f"You got {'{:.7}'.format(self.total())}€ on your budget category \n \n"
+        return f"You got {'{:.7}'.format(float(self.total()))}€ on your budget category \n \n"
 
     def transfer(self, amount, other):
         """Method to transfer a mount from a category to another category
@@ -100,12 +100,12 @@ class Category(object):
         :return: True if the operation went well or False if not
         """
         if amount <= 0:
-            raise CategoryException("The amount cannot be negative or equal to zéro")
+            raise CategoryException("The amount cannot be negative or equal to zero")
         if not self.check_funds(amount):
             return False
         else:
-            self.withdraw(amount, f"Transfer to {other.__name} Budget Category")
-            other.deposit(amount, f"Transfer from {self.__name} Budget Category")
+            self.withdraw(amount, f"Transfer to {other.__name}")
+            other.deposit(amount, f"Transfer from {self.__name}")
             return True
 
     def check_funds(self, amount):
@@ -134,8 +134,7 @@ def create_spend_chart(categories: list = Category):
     :param categories: a list of all the Category object that want to be compare
     :return: a string that is the chart.
     """
-    finalstring = f"{'{:-^20}'.format('')} \n" \
-                  "Percentage spent by category \n" \
+    finalstring = "Percentage spent by category \n" \
                   f"{'{:-^20}'.format('')} \n"
     totalwithdraw = 0
     allcat = []
@@ -151,7 +150,7 @@ def create_spend_chart(categories: list = Category):
         finalstring += f"{'{:3}'.format(x)}|"
         for cat in newallcat:
             if cat["percentage_withdrawals"] > x:
-                finalstring += " o"
+                finalstring += " o "
             else:
                 finalstring += "  "
         finalstring += "\n"
@@ -163,7 +162,7 @@ def create_spend_chart(categories: list = Category):
     while (len(listname) < 4):
         listname.append("")
     for item1, item2, item3, item4 in zip_longest(listname[0], listname[1], listname[2], listname[3], fillvalue=" "):
-        finalstring += f"{'{:>6}'.format(item1)} {item2} {item3} {item4} \n"
+        finalstring += f"{'{:>6}'.format(item1)}  {item2}  {item3}  {item4} \n"
         # for x in newallcat:
         #
         #     finalstring += f"{x['categories'][y]}"
