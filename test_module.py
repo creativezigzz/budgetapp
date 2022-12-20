@@ -121,9 +121,10 @@ class UnitTests(unittest.TestCase):
                    "          \n" \
                    " 70| o        \n 60| o        \n 50| o        \n 40| o        \n 30| o        \n 20| o  o     " \
                    "\n 10| o  o     \n  0| o  o  o  \n--------------------\n" \
-                   "     B  F  E  \n     u  o  n  \n     s  o  t  \n     i  d  e  \n     n     r  \n" \
-                   "     e     t  \n     s     a  \n     s     i  \n           n  \n           m  \n" \
-                   "           e  \n           n  \n           t  "
+                   "     F  E  B  \n     o  n  u  \n     o  t  s  \n     d  e  i  \n        r  n  \n" \
+                   "        t  e  \n        a  s  \n        i  s  \n        n     \n        m     \n" \
+                   "        e     \n        n     \n        t     "
+
         self.assertEqual(strip_white_space(actual), strip_white_space(expected),
                          'Expected different chart representation. Check that all spacing is exact.')
 

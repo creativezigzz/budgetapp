@@ -1,0 +1,42 @@
+Percentage spent by category 
+-------------------- 
+100|        
+ 90|        
+ 80|        
+ 70|        
+ 60|        
+ 50| o       
+ 40| o       
+ 30| o  o     
+ 20| o  o     
+ 10| o  o     
+  0| o  o  o   
+-------------------- 
+     C  F  F  H 
+     l  a  o  o 
+     o  m  o  u 
+     t  i  d  s 
+     h  l     e 
+     e  y       
+     s          
+*************Food*************
+Food                     700.0
+aa                       -65.0
+Total: 635.0
+ 
+***********Clothes************
+salary                  1000.0
+pull                     -80.0
+Transfer to House       -400.0
+Total: 520.0
+ 
+************House*************
+Transfer from Clothes    400.0
+Total: 400.0
+ 
+************Family************
+600                        2.0
+ok                       900.0
+Fam                     -320.0
+Total: 582.0
+ 
