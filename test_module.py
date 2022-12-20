@@ -3,13 +3,13 @@ import budget
 from budget import create_spend_chart
 
 
-def strip_white_space(str):
+def strip_white_space(stri):
     """Function to remove all potential whitespace and empty line.
 
-    :param str: The string to remove all whitespace
+    :param stri: The string to remove all whitespace
     :return:The sting without blank line and indent.
     """
-    return str.replace(" ", "").replace("\t", "").replace("\n", "")
+    return stri.replace(" ", "").replace("\t", "").replace("\n", "")
 
 
 class UnitTests(unittest.TestCase):

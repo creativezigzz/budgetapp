@@ -27,7 +27,7 @@ class Category(object):
             totstr += f"{des}{amo}\n"
         return f"{name}\n" \
                f"{totstr}" \
-               f"Total: {'{:.7}'.format(self.total())}" \
+               f"Total: {'{:.7}'.format(str(self.total()))}" \
                f"\n \n"
 
     @property
@@ -91,8 +91,8 @@ class Category(object):
         """Method to transfer a mount from a category to another category
         PRE: Amount must be positive, and other is an existing category
         POST: If there is enough funds in the self.ledger then add a new withdraw with
-        a description "Transfer to [other] Budget Categroy" and add a new deposit on other.ledger
-        with the same amount and a description : Transfer from [Source Budget Category]".
+        a description "Transfer to [other] Budget Categroy" and add a new deposit on other ledger
+        with the same amount and a description : "Transfer from [Source Budget Category]".
         If there are not enough funds, nothing should be added to either ledgers.
         RAISE: If amount is negative or equal to zero, then raise an exception.
         :param amount: The amount to transfer
@@ -159,7 +159,7 @@ def create_spend_chart(categories: list = Category):
     for cat in categories:
         listname.append(cat.name)
     # Remplir la liste pour qu'elle contienne 4 éléments
-    while (len(listname) < 4):
+    while len(listname) < 4:
         listname.append("")
     for item1, item2, item3, item4 in zip_longest(listname[0], listname[1], listname[2], listname[3], fillvalue=" "):
         finalstring += f"{'{:>6}'.format(item1)}  {item2}  {item3}  {item4} \n"
