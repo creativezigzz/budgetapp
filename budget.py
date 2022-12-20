@@ -52,7 +52,7 @@ class Category(object):
     def deposit(self, amount, description=""):
         """Method that accepts an amount and description and add it to the ledger
 
-         PRE: amount must be filled, but the description is optional.
+         PRE: amount must be filled and positive, but the description is optional.
          POST: create a new dictionary entry with the amount and description (if it's only
          the amount then return a empty description) and add it to the ledger of the instance.
 
@@ -128,7 +128,7 @@ class Category(object):
 
 def create_spend_chart(categories: list = Category):
     """Show the pourcentages spent in each category passed in to the function.
-    PRE: The percentage spent should be calculated only with withdrawals and not with deposits.µ
+    PRE: The percentage spent should be calculated only with withdrawals and not with deposits.
     They can be up to four category.
     POST : Each percentage of category should be rounded down to the nearest 10.
     :param categories: a list of all the Category object that want to be compare
@@ -156,8 +156,8 @@ def create_spend_chart(categories: list = Category):
         finalstring += "\n"
     listname = []  # Liste qui contient les différents noms des catégories
     finalstring += f"{'{:-^20}'.format('')} \n"
-    for cat in categories:
-        listname.append(cat.name)
+    for cat in newallcat:
+        listname.append(cat['categories'])
     # Remplir la liste pour qu'elle contienne 4 éléments
     while len(listname) < 4:
         listname.append("")
